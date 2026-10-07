@@ -418,3 +418,84 @@ Confirmed the page renders and all five images load.
 
 No follow-up needed.
 
+
+## Problem 12 — Audit Trail, Safety, Finish Harness
+
+**Prompt:**
+
+> problem 12: audit trail, safety, finish harness
+>
+> keep an append-only output/audit_trail.json of agent-loop activity (time, tool, name, short args/result, stop reason). do not wipte it between runs.
+>
+> Also think of some safety rules to give the agent and put them in prompts/prompt.md (first, give me options and i will consider and come up with my own as well)
+>
+> finish output/harness.md so its clear how the sytem works.
+>
+> * model fields in model.py and why i chose them
+> * tools and abilities
+> * safety rules
+> * specs (loop limites, result caps, models, how to run front + back)
+>
+> again, give me the options discussed in this prompt first, then we will implement
+
+**Follow-up prompt (my safety choices):**
+
+> for safety to implement, lets make sure that users can opt out of having their data/preferences tracked.
+>
+> never comment on a shoppers body, it should stay neutral in when it talks about peoples bodies
+>
+> it shouldnt take any personal data we dont need
+>
+> it should be clear its an AI assistant and nota. human
+>
+> it should laso be sensitive and neutral about any school rivalries
+>
+> these are teh safety thignsi i choose, for obvious reasons, so include these
+
+**What the first prompt was missing:** the options list was mine to produce, but
+which safety rules actually matter for this shop is a judgement about customers,
+not about code — that had to come from me. The tracking opt-out was my own
+addition and turned out to be the only one needing real engineering.
+
+**Result:** Built `backend/audit.py` writing `output/audit_trail.json` as JSON
+Lines — genuinely append-only, crash-safe, lock-guarded, never wiped. Rewrote
+`agent.answer()` to run through `agent.iter()` so each loop iteration is audited
+as it happens, with a closing record showing which product ids were shown and
+which were dropped. Implemented all five chosen safety rules: the tracking
+opt-out as a real `user_preferences` table plus a footer privacy panel where
+switching something off *deletes* what is already stored (guests' browsing never
+reaches the server at all), and the other four in `prompts/prompt.md`. Finished
+`output/harness.md` with every type in `models.py` and why it has its fields,
+the four tools, ten safety subsections, and specs covering loop limits, result
+caps, the audit format, ports and run instructions. Found and fixed a serious
+bug while testing: `search_products` had no size argument, so "hoodies in XXL"
+was folded into the text query and returned nothing — the agent told a shopper
+we had none when we had 23.
+
+
+## Problem 13 — Push to GitHub and Submit the URL
+
+**Prompt:**
+
+> problem 13: piush to github and submit the URL
+>
+> put the code in a folde rnamed hw4 and push it to public github repository. on canvas, i will then submit the repo URL (so the link graders can open adn clone). so give me the URL that i will submit to my professor
+>
+> do no put my real .env, campus_customs.db, or product images in teh GitHub repo. use .gitignore. include .env.example with placeholders only
+>
+> the agent istels is four files under backend/: prompts/prompt.md, agent.py, tools.py, and models.py
+>
+> README.md should explain how to trun the front end and theback end after placing the data pack.
+
+**Result:** Moved `requirements.txt` to the root to match the expected layout,
+wrote `.env.example` with placeholders only, hardened `.gitignore`, and rewrote
+`README.md` to lead with placing the data pack before either server. Scanned for
+secrets before the first commit and audited the staged file list: zero data
+files, zero `.db` files, zero product images, zero `.env`, zero keys. Pushed to
+a public repo named `hw4`, then cloned it fresh into a temporary directory and
+re-ran the leak check on the clone, installed from `requirements.txt`, and
+confirmed the backend fails with a clear message without the data pack and
+reports 102 products with it.
+
+**Repo:** <https://github.com/riasreed-io/hw4>
+
