@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# The data pack is NOT in this repo. Download it separately and unzip it here
+# so you have data/campus_customs.db and data/products/. See README.md.
+# ---------------------------------------------------------------------------
+data/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Product images, wherever they land
+products/
+*.jpg
+*.jpeg
+*.png
+*.webp
+!output/app_check_images/*.png
+!output/app_check_images/*.jpg
+
+# Secrets. .env.example is committed; .env never is.
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+joke.txt

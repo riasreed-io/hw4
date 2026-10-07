@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campus Customs — App Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#002147; --navy-dark:#001229; --gold:#9a7b24; --gold-bright:#c9a227;
+    --gold-pale:#e8dcb5; --bg:#faf7f0; --soft:#f1ebdd; --line:#ded5c0;
+    --ink:#1a1814; --muted:#6b6356; --ok:#2f5d3a;
+    --display:"Cinzel",Georgia,serif; --body:"Cormorant Garamond",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--body); font-size:18px; line-height:1.7;
+    background-image:radial-gradient(circle at 1px 1px,rgba(120,104,70,.055) 1px,transparent 0);
+    background-size:14px 14px;
+  }
+  header{
+    background:linear-gradient(170deg,#0b3a6b,var(--navy) 45%,var(--navy-dark));
+    color:#fff; padding:52px 0 46px; border-bottom:3px double var(--gold);
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+  header h1{
+    font-family:var(--display); font-size:38px; font-weight:600;
+    letter-spacing:.05em; margin:0 0 8px; color:#faf7f0;
+  }
+  header .sub{font-size:19px;color:#d8e3f0;margin:0;font-style:italic}
+  header .meta{
+    margin-top:22px; font-family:var(--display); font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--gold-pale);
+  }
+  main{padding:14px 0 70px}
+  .intro{
+    background:var(--soft); border:1px solid var(--line); border-left:4px solid var(--gold);
+    padding:18px 22px; margin:42px 0 10px; font-size:17px;
+  }
+  .intro b{font-family:var(--display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy)}
+  .intro code{font-family:ui-monospace,Menlo,monospace;font-size:14px;background:#fff;padding:1px 5px;border:1px solid var(--line)}
+  section{margin:56px 0 0; padding-top:30px; border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+  h2{
+    font-family:var(--display); font-size:25px; font-weight:600; letter-spacing:.03em;
+    color:var(--navy); margin:0 0 6px; padding-bottom:12px; position:relative;
+  }
+  h2::after{content:"";position:absolute;left:0;bottom:0;width:66px;height:2px;background:var(--gold)}
+  .num{
+    display:inline-block; font-family:var(--display); font-size:12px; letter-spacing:.14em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:10px;
+  }
+  .num.extra{color:var(--muted)}
+  .proves{font-size:18px;margin:14px 0 22px;max-width:76ch}
+  figure{margin:0 0 10px}
+  figure img{
+    display:block; width:100%; height:auto; border:1px solid var(--line);
+    border-radius:3px; background:#fff; box-shadow:0 8px 26px rgba(0,33,71,.12);
+  }
+  figcaption{font-size:15.5px;color:var(--muted);font-style:italic;margin-top:10px}
+  .check{
+    margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:3px;
+    padding:4px 18px 10px;
+  }
+  .check b{font-family:var(--display);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);display:block;margin:14px 0 6px}
+  table{border-collapse:collapse;width:100%;font-size:16px;margin-bottom:8px}
+  th,td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--display);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  td.ok{color:var(--ok);font-weight:600;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  footer{
+    background:linear-gradient(180deg,var(--navy),var(--navy-dark)); color:#b9cde6;
+    padding:30px 0; border-top:3px double var(--gold); font-size:15px;
+  }
+  @media(max-width:620px){ body{font-size:17px} header h1{font-size:28px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Campus Customs — App Check</h1>
+    <p class="sub">Three checks against the running site, with every claim verified against the database.</p>
+    <p class="meta">MGT 409 · Homework 4 · Problem 11</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="intro">
+    <b>How this was run</b><br />
+    Backend: <code>cd backend &amp;&amp; uvicorn main:app --reload --port 8000</code>.
+    Front end: <code>npm --prefix frontend run dev</code> on
+    <code>http://localhost:5180</code>. Every screenshot below is from that running site.
+    Under each one, the numbers the site showed are checked against
+    <code>campus_customs.db</code> directly.
+  </p>
+
+  <!-- ============ CHECK 1 ============ -->
+  <section>
+    <span class="num">Check 1</span>
+    <h2>The chat reports real inventory and real prices</h2>
+    <p class="proves">
+      Asked <em>"what inventory do you have for hoodie?"</em>, the assistant answered with a
+      count, six named products with prices, and the range of stock totals. None of those
+      numbers come from the model — it called <code>search_products</code>, and every figure
+      below was read out of the database.
+    </p>
+    <figure>
+      <img src="app_check_images/01_chat_inventory.png" alt="Chat panel answering a question about hoodie inventory with six products, prices and stock totals" />
+      <figcaption>
+        The assistant found 27 hoodies, listed the first six with prices, and offered to break
+        one down by size — rather than guessing at a size it had not looked up.
+      </figcaption>
+    </figure>
+    <div class="check">
+      <b>Checked against the database</b>
+      <table>
+        <tr><th>What the chat said</th><th>What the database says</th><th></th></tr>
+        <tr><td>"27 hoodie products"</td><td>27 products in the Hoodies category</td><td class="ok">matches</td></tr>
+        <tr><td>Ua Gameday Double Knit Hood — $45</td><td>$45, 68 in stock</td><td class="ok">matches</td></tr>
+        <tr><td>Yale Sports Hoodie Tennis — $45</td><td>$45, 67 in stock</td><td class="ok">matches</td></tr>
+        <tr><td>Basic Hoodie Big Yale — $68</td><td>$68, 60 in stock</td><td class="ok">matches</td></tr>
+        <tr><td>Champion Reverse Weave Hoodie 1 — $68</td><td>$68, 80 in stock</td><td class="ok">matches</td></tr>
+        <tr><td>Crew Left Chest Hoodie — $68</td><td>$68, 65 in stock</td><td class="ok">matches</td></tr>
+        <tr><td>District Vit Hoodie Vintage Bulldog — $68</td><td>$68, 69 in stock</td><td class="ok">matches</td></tr>
+        <tr><td>"stock totals ranging from 60 to 80 units"</td><td>Lowest 60, highest 80</td><td class="ok">matches</td></tr>
+      </table>
+      <p style="font-size:16px;color:var(--muted);margin:4px 0 10px">
+        The "27" is worth noting on its own. The raw <code>garment_type</code> column holds 22
+        different spellings of about six categories, so matching it literally would have
+        returned 5 hoodies. The backend normalises it first, which is why the count is right.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CHECK 2 ============ -->
+  <section>
+    <span class="num">Check 2</span>
+    <h2>A category question fills the page with product cards</h2>
+    <p class="proves">
+      The same hoodie question did not just answer in the chat bubble — the page itself
+      rendered the matching products as full cards under the heading <em>Hoodies</em>. This is
+      the API contract from Problem 7: the agent returns structured product ids, and the front
+      end renders them.
+    </p>
+    <figure>
+      <img src="app_check_images/02_dynamic_cards.png" alt="The Hoodies page filled with product cards generated by the chat, with the chat panel open beside them" />
+      <figcaption>
+        Six cards appeared on the page with image, name, description, price and live stock
+        badge — and the chat panel shows the same six, so the two views agree.
+      </figcaption>
+    </figure>
+    <div class="check">
+      <b>What this proves</b>
+      <table>
+        <tr><td>The heading reads <strong>Hoodies</strong></td><td>The agent chose that label itself, in the shopper's words.</td></tr>
+        <tr><td>Cards show $45, $45, $68 and stock badges</td><td>Every field was rebuilt from the database after the agent chose the ids — the model never supplies a price.</td></tr>
+        <tr><td>Cards are the same component as the catalogue grid</td><td>Clicking one opens the full product page, exactly like a card found by browsing.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ CHECK 3 ============ -->
+  <section>
+    <span class="num">Check 3</span>
+    <h2>Usability feature: the filter bar</h2>
+    <p class="proves">
+      The products page used to offer one way to narrow 102 items — six garment chips. It now
+      filters on five facets at once, each with a live count, and the whole filter state lives
+      in the URL so a narrowed grid can be shared or bookmarked.
+    </p>
+    <figure>
+      <img src="app_check_images/03_filter_bar.png" alt="The products page filter bar showing garment, collection, size, colour and price facets with counts" />
+      <figcaption>
+        Garment, Collection, Size, Colour and Price, plus an in-stock toggle. <em>Crewnecks</em>
+        is selected, the result count reads 29, and the active filter shows as a removable pill.
+      </figcaption>
+    </figure>
+    <div class="check">
+      <b>Checked against the database</b>
+      <table>
+        <tr><th>Facet shown</th><th>Database</th><th></th></tr>
+        <tr><td>Crewnecks 29 selected → "29 products"</td><td>29 crewnecks</td><td class="ok">matches</td></tr>
+        <tr><td>T-shirts 25, Hoodies 27, Quarter-zips 11, Jackets 8, Long sleeve 2</td><td>Same, and 25+2+29+27+11+8 = 102</td><td class="ok">matches</td></tr>
+        <tr><td>Collection: 19 + 12 + 1 + 33 + 3 + 34</td><td>= 102, every product classified</td><td class="ok">matches</td></tr>
+        <tr><td>Size XS 75, S 78, M 80, L 78, XL 77, XXL 79</td><td>Products with stock &gt; 0 in that size</td><td class="ok">matches</td></tr>
+      </table>
+      <p style="font-size:16px;color:var(--muted);margin:4px 0 10px">
+        <strong>Collection replaced a planned mens/womens filter.</strong> Checking the data
+        first showed only 3 of 102 products carry a men's label and none carry a women's, so
+        that filter would have read "Men's (3)" beside "everything else (99)". Collection
+        divides all 102 and answers the same question — what am I shopping <em>for</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ EXTRA ============ -->
+  <section>
+    <span class="num extra">Also shown — not one of the three required checks</span>
+    <h2>Usability feature: related products</h2>
+    <p class="proves">
+      Every product page now ends with a "More like this" row, ranked by shared collection,
+      then garment type, with in-stock items first. The product page used to be a dead end.
+    </p>
+    <figure>
+      <img src="app_check_images/04_related_products.png" alt="A More like this row showing three related navy crewnecks with prices and stock" />
+      <figcaption>
+        From a navy Athletics crewneck: three more Athletics crewnecks, all $58, all in stock.
+      </figcaption>
+    </figure>
+    <div class="check">
+      <b>Checked against the database</b>
+      <table>
+        <tr><th>Card</th><th>Database</th><th></th></tr>
+        <tr><td>Diving Left Chest Crewneck — $58, 60 in stock</td><td>$58, 60 units, Athletics / Crewnecks</td><td class="ok">matches</td></tr>
+        <tr><td>Lacrosse Left Chest Crewneck — $58, 71 in stock</td><td>$58, 71 units, Athletics / Crewnecks</td><td class="ok">matches</td></tr>
+        <tr><td>Soccer Left Chest Crewneck — $58, 17 in stock</td><td>$58, 17 units, Athletics / Crewnecks</td><td class="ok">matches</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <span class="num extra">Also shown — not one of the three required checks</span>
+    <h2>Design: Handsome Dan, and the switch that turns him off</h2>
+    <p class="proves">
+      The cursor is Handsome Dan, drawn as inline SVG, and clicking produces a bark synthesised
+      in the Web Audio API. Both are switchable from the nav, and the choice is remembered.
+    </p>
+    <figure>
+      <img src="app_check_images/05_handsome_dan.png" alt="The navigation bar with the Handsome Dan menu open, showing cursor and bark toggles" />
+      <figcaption>
+        Here the bark has been switched off while the cursor stays on — the two are independent.
+        He never barks on a text input, or on the toggle that turns barking off.
+      </figcaption>
+    </figure>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Campus Customs · 57 Broadway, New Haven CT 06511 · Built as coursework for MGT 409.
+  </div>
+</footer>
+
+</body>
+</html>
